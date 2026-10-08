@@ -153,6 +153,7 @@ def append_selected_gene_symbols(
 
 def add_selected_catalog_genes() -> None:
     selected_symbols = st.session_state.get("catalog_selected_symbols", [])
+    shortlist = selected_symbols
     try:
         st.session_state["gene_input"] = append_selected_gene_symbols(
             st.session_state.get("gene_input", ""),
@@ -651,6 +652,7 @@ if discover_catalog:
     except SourceError as exc:
         st.error(f"Gene catalog retrieval failed: {exc}")
 
+shortlist: list[str] = []
 catalog = st.session_state.catalog
 catalog_gene_rows: list[dict[str, object]] = []
 if catalog:
@@ -1097,7 +1099,8 @@ if catalog:
         )
     else:
         st.info(
-            "No emerging or novel targets are in the current shortlist. "
+            "No emerging or novel targets are in the current "
+            ". "
             "Include Emerging or Novel in “Show provisional classes” or select candidates from the catalog."
         )
 
