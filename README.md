@@ -40,7 +40,7 @@ The project is prepared for Streamlit Community Cloud. The deployed app can be p
 3. In Streamlit Community Cloud, select **Create app**, choose the repository and branch, and set the app file to `app.py`.
 4. Deploy, then use the app's **Share** control to copy its public `*.streamlit.app` URL.
 
-The first deployment starts without a bundled local gene catalog or saved assessment package. Visitors can fetch the public Open Targets catalog and public evidence from within the app. Assessments and CSV exports are session-specific; CSV downloads are generated in memory rather than written to a shared server directory.
+The deployment includes a dated Open Targets obesity gene-catalog snapshot so the complete catalog view is available immediately, including on a fresh Streamlit Cloud instance. Use **Fetch all Open Targets obesity-associated genes** to refresh it from Open Targets. Saved assessment packages are not bundled. Assessments and CSV exports are session-specific; CSV downloads are generated in memory rather than written to a shared server directory.
 
 Before sharing, test the public URL in a private/incognito browser window. Public access means anyone with the URL can use the dashboard. Do not upload confidential, internal, patient-level, or otherwise sensitive evidence.
 

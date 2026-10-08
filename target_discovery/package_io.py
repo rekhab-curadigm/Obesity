@@ -265,10 +265,14 @@ def load_latest_package(base_dir: Path) -> tuple[dict[str, TargetAssessment], Pa
 
 def load_latest_gene_catalog(base_dir: Path) -> tuple[dict[str, Any] | None, Path | None]:
     catalog_paths = list((base_dir / "runs").glob("*/gene_catalog.json"))
-    if not catalog_paths:
-        return None, None
-    latest_path = max(catalog_paths, key=lambda path: path.stat().st_mtime)
-    return json.loads(latest_path.read_text(encoding="utf-8")), latest_path
+    if catalog_paths:
+        latest_path = max(catalog_paths, key=lambda path: path.stat().st_mtime)
+        return json.loads(latest_path.read_text(encoding="utf-8")), latest_path
+
+    bundled_path = base_dir / "data" / "obesity_gene_catalog.json"
+    if bundled_path.exists():
+        return json.loads(bundled_path.read_text(encoding="utf-8")), bundled_path
+    return None, None
 
 
 def save_gene_catalog(base_dir: Path, catalog: dict[str, Any]) -> Path:

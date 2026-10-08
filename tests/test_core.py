@@ -723,6 +723,23 @@ class CatalogTests(unittest.TestCase):
             self.assertEqual(path, saved)
             self.assertTrue(saved.with_name("gene_catalog.csv").exists())
 
+    def test_bundled_catalog_loads_when_no_saved_catalog_exists(self) -> None:
+        import json
+        from tempfile import TemporaryDirectory
+        from pathlib import Path
+
+        with TemporaryDirectory() as directory:
+            data_dir = Path(directory) / "data"
+            data_dir.mkdir()
+            bundled_path = data_dir / "obesity_gene_catalog.json"
+            expected = {"disease_id": "MONDO_0011122", "genes": [{"gene": "GENE1"}]}
+            bundled_path.write_text(json.dumps(expected), encoding="utf-8")
+
+            loaded, path = load_latest_gene_catalog(Path(directory))
+
+            self.assertEqual(loaded, expected)
+            self.assertEqual(path, bundled_path)
+
 
 class EvidenceWorkbookTests(unittest.TestCase):
     def test_workbook_includes_identifiers_links_and_agent_coverage(self) -> None:

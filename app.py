@@ -671,7 +671,13 @@ if catalog:
         "They are not final maturity decisions."
     )
     if st.session_state.catalog_path:
-        st.caption(f"Saved catalog: {Path(st.session_state.catalog_path).parent.name}")
+        catalog_path = Path(st.session_state.catalog_path)
+        if catalog_path.parent.name == "data":
+            st.caption("Using the bundled Open Targets catalog snapshot. Fetch again above to refresh it.")
+        else:
+            st.caption(f"Saved catalog: {catalog_path.parent.name}")
+    if catalog.get("retrieved_at_utc"):
+        st.caption(f"Catalog snapshot retrieved: {catalog['retrieved_at_utc']}")
 
     all_catalog_rows = catalog_gene_rows
     all_class_names = ["Known", "Emerging", "Novel"]
